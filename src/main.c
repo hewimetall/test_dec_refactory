@@ -1,66 +1,50 @@
-#include <float.h>
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "binary_api/core.h"
-#define conv_dig(x) x - 47
 
-int is_digit(char c) {
-  if (47 <= c && c >= 57)
-    return 1;
-  else
-    return 0;
-}
-
-// int main() {
-//   float data = 124.00F;
-//   char str[8000];
-//   char *p = &str;
-//   sprintf (str, "%f", data);
-//   s21_uint64  u64 = 0;
-//   short is_sign = 0;
-//   if(*str == '-') is_sign++, p++;
-//   int len = strlen(str);
-//   DEC_INIT(tmp);
-//   int err;
-//   int exp = 0;
-//   s21_decimal res;
-//   for( char *pp = p; *pp;)
-//   while (*p && *p == '.' && is_digit(*p)){
-//     if(exp) exp++;
-//     if(*p == '.') exp++, *p++;
-//     tmp.data[0] = conv_dig(*p);
-//     tmp = binary_multiplication(tmp,s21_pow10(len), &err);
-//     res = binary_addition(tmp, res, &err);
-//     *p++;
-//   }
-//   for(char c )
-//   return 0;
-// }
-
-// return
-
-int decpart_to_int(float decpart, short size) {
-  char str[12] = {0};
-  sprintf(str, "%g", decpart);
-}
-
-int glue(s21_uint64 d, s21_uint64 f, s21_decimal *res, short shift) {
-  int err = 0;
-  s21_decimal dec = int64_to_decimal(d);
-  s21_decimal part = int64_to_decimal(f);
-  *res = binary_multiplication(dec, s21_pow10(shift), &err);
-  *res = binary_addition(part, *res, &err);
-  return err;
+/** @brief wraper for _s21_is.
+ *
+ * Обертка для ф _s21_is
+ * Переворачивает аргументы если степени(exp) разные и вызывает функцию _s21_is
+ *  @return int
+ *          > 0 -> a > b
+ *          = 0 -> a == b
+ *          < 0 -> a < b
+ */
+int s21_is(s21_decimal v1, s21_decimal v2, int *err) {
+  int data = 0;
+  *err = normolize(&v1, &v2);
+  int is_left = 0;
+  s21_decimal res = binary_subtraction(v1, v2, err);// <= 0
+  printf("DATA:%d %d\n",eq_zero(res),res);
+  if (eq_zero(res)) {
+    res = binary_subtraction(v2, v1, err); // >= 0
+    if (!eq_zero(res)) {
+      is_left = -1;
+    } else {
+      is_left = 0;
+    }
+  } else {
+    is_left = 1;
+  }
+  return is_left;
 }
 
 int main() {
-  int err = 0;
-  float data = 124.00F;
-  s21_uint64 i = (int)data;
+  DEC_INIT(v1);
+  DEC_INIT(v2);
   DEC_INIT(res);
-  int intpart = (int)data;
-  short size = 0;
-  s21_uint64 dec_part = decpart_to_int(data - (float)intpart, &size);
-  err = glue(i, f, &res, size);
+  v1.data[0] = 1<<31;
+  
+  v2.data[0] = MAX_INPUT;
+  v2.data[1] = -1;
+
+  // v1.head.exp = 1;
+  int err = 0;
+  // int data =s21_is(v1, v2, &data);
+  s21_decimal data = binary_subtraction(v1, v2, &err);
+  printf("%d\t%u",data.data[0],data.data[0]);
+  // printf("%d\n%u\n%u- %d", v2.head.exp, v2.data[0], data, err);
 }

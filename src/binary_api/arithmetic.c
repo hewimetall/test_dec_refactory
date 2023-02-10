@@ -23,7 +23,7 @@
 
 s21_decimal binary_addition(s21_decimal value_1, s21_decimal value_2, int *err) {
     *err = ARITHMETIC_OK;
-    s21_decimal carry = {0};
+    s21_decimal carry = {{0},{.flags=0}};
 
     while (!eq_zero(value_2)) {
         zerro_data(&carry);
@@ -43,22 +43,12 @@ s21_decimal binary_addition(s21_decimal value_1, s21_decimal value_2, int *err) 
 s21_decimal binary_subtraction(s21_decimal value_1, s21_decimal value_2, int *err) {
     *err = ARITHMETIC_OK;
     value_1.data[3] = 0;
-    value_2.data[3] = 0;
+    value_2.data[3] = -1;
     s21_decimal carry = {0};
-    DEC_INIT(f);
-    f.data[0]=1;
-    value_2 = binary_addition(bit_not(value_2), s21_pow10(0), err);
-
-    while (!eq_zero(value_2)) {
-        zerro_data(&carry);
-        carry = bit_and(value_1, value_2);
-        shiftl(&carry);
-        value_1 = bit_xor(value_1, value_2);
-        value_2 = carry;
+    if(!eq_zero(value_2)){
+        value_2 = binary_addition(bit_not(value_2), s21_pow10(0), err);
     }
-
-    value_1.data[3] = 0;
-    return value_1;
+    return binary_addition(value_1,value_2, err);
 }
 
 s21_decimal binary_multiplication(s21_decimal value_1, s21_decimal value_2, int *err) {

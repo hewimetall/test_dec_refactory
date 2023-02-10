@@ -64,7 +64,7 @@ BINARY_SOURCE := $(shell find ./binary_api -iname "*.c" )
 LIB_INC ?=libbinary
 
 libbinary: ${BINARY_SOURCE}
-	gcc -c  $^
+	gcc -g -c  $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean
@@ -72,7 +72,7 @@ libbinary: ${BINARY_SOURCE}
 # make main.a with default{libbinary}
 # make main.a LIB_INC=test wuth lib test
 main: ${LIB_INC}
-	gcc   main.c ${LIB_INC} -o $@
+	gcc  -g main.c ${LIB_INC} -o $@
 	./main || true
 clean: 
 	-rm -rf *.o && rm -rf *.gcno
