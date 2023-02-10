@@ -62,7 +62,6 @@ LDFLAGS = -c
 
 BINARY_SOURCE := $(shell find ./binary_api -iname "*.c" )
 LIB_INC ?=libbinary
-.PHONY: libbinary main.a
 
 libbinary: ${BINARY_SOURCE}
 	gcc -c  $^
@@ -72,9 +71,9 @@ libbinary: ${BINARY_SOURCE}
 # Excemle run 
 # make main.a with default{libbinary}
 # make main.a LIB_INC=test wuth lib test
-main.a: ${LIB_INC}
+main: ${LIB_INC}
 	gcc   main.c ${LIB_INC} -o $@
-	./main.a || true
+	./main || true
 clean: 
 	-rm -rf *.o && rm -rf *.gcno
 	-rm -rf *.a && rm -rf *.gcda
@@ -82,3 +81,4 @@ clean:
 	-rm -rf ./test && rm -rf ./cov-report
 	-rm -rf ./report/ && rm -rf test.dSYM
 	-rm -rf test
+.PHONY: libbinary main.a
