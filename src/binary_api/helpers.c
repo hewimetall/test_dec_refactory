@@ -17,9 +17,6 @@ void set_bit_0(s21_decimal *n, int pos) {
     ZERO_BIT(n->data[pos / 32], pos % 32);
 }
 
-int eq_zero(s21_decimal value) {
-    return (value.data[0] == 0 && value.data[1] == 0 && value.data[2] == 0);
-}
 
 int max(int a, int b) {
     return a > b ? a : b;

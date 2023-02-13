@@ -60,14 +60,29 @@ LDFLAGS = -c
 
 
 
-BINARY_SOURCE := $(shell find ./binary_api -iname "*.c" )
+BINARY_SOURCE := $(shell find ./binary_api -d 1 -iname "*.c" )
 LIB_INC ?=libbinary
+TEST_SOURCE_CORE := $(shell find ./tests/tests_binary -iname "*.c" )
+
+
+ifeq ($(shell uname -s),Darwin)
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lpthread -lm
+else
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lgcov -lpthread -lm -lsubunit
+endif
+
 
 libbinary: ${BINARY_SOURCE}
 	gcc -g -c  $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean
+
+test_core: ${TEST_SOURCE_CORE} libbinary
+	make clean
+	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
+	./$@
+
 # Excemle run 
 # make main.a with default{libbinary}
 # make main.a LIB_INC=test wuth lib test

@@ -19,6 +19,8 @@
     2:     0001 1010 New 
     C:     0111 0001
     5. Если Керри не ноль (если еще есть что прибавлять), то продолжаем цикл
+    Особые точки:
+        MAX v1 v2;
  */
 
 s21_decimal binary_addition(s21_decimal value_1, s21_decimal value_2, int *err) {
@@ -30,37 +32,38 @@ s21_decimal binary_addition(s21_decimal value_1, s21_decimal value_2, int *err) 
         carry = bit_and(value_1, value_2);
         *err = shiftl(&carry);
         value_1 = bit_xor(value_1, value_2);
-
         value_2 = carry;
 
-        if (*err)
-            break;
+        if (*err){
+            break;}
     }
-
     return value_1;
 }
 
 s21_decimal binary_subtraction(s21_decimal value_1, s21_decimal value_2, int *err) {
     *err = ARITHMETIC_OK;
-    value_1.data[3] = 0;
-    value_2.data[3] = -1;
-    s21_decimal carry = {0};
-    if(!eq_zero(value_2)){
-        value_2 = binary_addition(bit_not(value_2), s21_pow10(0), err);
+    DEC_INIT(carry);
+    if(!eq_zero(value_2) && !eq_max(value_2)){
+        value_2 = binary_addition(bit_not(value_2), DECIMAL_ONE, err);
+        carry = binary_addition(value_1,value_2, err);
+    }else if (eq_max(value_2) && !eq_max(value_1))
+    {
+        // IF VAL - MAX = 0;
+        *err = 1;
     }
-    return binary_addition(value_1,value_2, err);
+    return carry;
 }
 
 s21_decimal binary_multiplication(s21_decimal value_1, s21_decimal value_2, int *err) {
     *err = ARITHMETIC_OK;
-    s21_decimal result = {0};
-    DEC_INIT(f);
-    f.data[0]=1;
+    DEC_INIT(result);
     while (!eq_zero(value_2) && !(*err)) {
-        if (!eq_zero(bit_and(value_2, s21_pow10(0)))) {
+        if (!eq_zero(bit_and(value_2, DECIMAL_ONE))) {
             result = binary_addition(result, value_1, err);
             if (*err)
                 break;
+        }else{
+            printf("%d\n",result.data[0]);
         }
 
         *err = shiftl(&value_1);

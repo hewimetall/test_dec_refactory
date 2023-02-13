@@ -4,10 +4,6 @@
 #include <math.h>
 #include "binary_api/core.h"
 
-#define set_bit(a, b) (a & 1 << b)
-#define change_bit(a, b) (a | 1 << b)
-#define SIGN_DECIMAL_MASK 0x80000000  // 10000000 00000000 00000000 00000000
-
 /* Comparison Operators */
 int s21_is(s21_decimal a, s21_decimal b, int *err);
 int s21_is_less(s21_decimal a, s21_decimal b);

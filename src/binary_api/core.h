@@ -27,9 +27,14 @@ int max(int a, int b);
 int min(int a, int b);
 void zerro_data(s21_decimal *val);
 s21_decimal s21_pow10(int exp);
-int eq_zero(s21_decimal value);
 s21_decimal int64_to_decimal(s21_uint64 a);
 int normolize(s21_decimal *v1, s21_decimal *v2);
+
+
+// eq
+short compere(s21_decimal a, s21_decimal b);
+int eq_zero(s21_decimal value);
+int eq_max(s21_decimal value);
 
 // Smart bit setters
 void set_bit(s21_decimal *n, int pos, s21_bool bit);
