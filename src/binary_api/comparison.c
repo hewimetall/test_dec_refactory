@@ -8,7 +8,7 @@
     a == b == 0
     a < b == -1
 */
-short compere(s21_decimal a, s21_decimal b) {
+short compare(s21_decimal a, s21_decimal b) {
     short data = 0;
     for(int i = sizeof(a.data)*8-1; i>=0 && !data; --i)
         data = get_bit(a,i) - get_bit(b,i); 

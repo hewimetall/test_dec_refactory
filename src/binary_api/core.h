@@ -30,7 +30,7 @@ s21_decimal int64_to_decimal(s21_uint64 a);
 int dec_normolize(s21_decimal *v1, s21_decimal *v2);
 
 // eq
-short compere(s21_decimal a, s21_decimal b);
+short compare(s21_decimal a, s21_decimal b);
 int eq_zero(s21_decimal value);
 int eq_max(s21_decimal value);
 
