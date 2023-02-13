@@ -6,7 +6,7 @@
   1) get max exp
   2) update_exp
 */
-int normalize(s21_decimal *v1, s21_decimal *v2) {
+int dec_normalize(s21_decimal *v1, s21_decimal *v2) {
   int diff = v1->head.exp - v2->head.exp;
   int err = ARITHMETIC_OK;
   if (diff > 0) {

@@ -21,7 +21,6 @@ s21_decimal bit_or(s21_decimal a, s21_decimal b);
 s21_decimal bit_and(s21_decimal a, s21_decimal b);
 s21_decimal bit_not(s21_decimal a);
 
-
 // Helpers
 int max(int a, int b);
 int min(int a, int b);
@@ -29,7 +28,6 @@ void zerro_data(s21_decimal *val);
 s21_decimal s21_pow10(int exp);
 s21_decimal int64_to_decimal(s21_uint64 a);
 int normolize(s21_decimal *v1, s21_decimal *v2);
-
 
 // eq
 short compere(s21_decimal a, s21_decimal b);
@@ -48,5 +46,7 @@ void shiftr(s21_decimal *a);
 
 // arifm
 s21_decimal binary_addition(s21_decimal value_1, s21_decimal value_2, int *err);
-s21_decimal binary_subtraction(s21_decimal value_1, s21_decimal value_2, int *err);
-s21_decimal binary_multiplication(s21_decimal value_1, s21_decimal value_2, int *err);
+s21_decimal binary_subtraction(s21_decimal value_1, s21_decimal value_2,
+                               int *err);
+s21_decimal binary_multiplication(s21_decimal value_1, s21_decimal value_2,
+                                  int *err);
