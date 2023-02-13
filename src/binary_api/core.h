@@ -27,7 +27,7 @@ int min(int a, int b);
 void zerro_data(s21_decimal *val);
 s21_decimal s21_pow10(int exp);
 s21_decimal int64_to_decimal(s21_uint64 a);
-int normolize(s21_decimal *v1, s21_decimal *v2);
+int dec_normolize(s21_decimal *v1, s21_decimal *v2);
 
 // eq
 short compere(s21_decimal a, s21_decimal b);
