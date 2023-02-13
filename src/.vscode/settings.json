@@ -32,7 +32,10 @@
         "stop_token": "c",
         "streambuf": "c",
         "tuple": "c",
-        "__string": "c"
+        "__string": "c",
+        "cmath": "c",
+        "__bit_reference": "c",
+        "unordered_map": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
