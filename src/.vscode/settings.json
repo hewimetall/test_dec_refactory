@@ -31,7 +31,8 @@
         "istream": "c",
         "stop_token": "c",
         "streambuf": "c",
-        "tuple": "c"
+        "tuple": "c",
+        "__string": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
