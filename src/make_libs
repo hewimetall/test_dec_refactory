@@ -1,0 +1,55 @@
+GCC = gcc
+CFLAGS = -I. 
+LDFLAGS = -c
+
+binary_s := $(shell find ./binary -maxdepth 1 -iname "*.c" )
+comparison_s := $(shell find ./comparison -maxdepth 1 -iname "*.c" )
+conversion_s := $(shell find ./conversion -maxdepth 1 -iname "*.c" )
+helpers_s := $(shell find ./helpers -maxdepth 1 -iname "*.c" )
+math_ops_s := $(shell find ./math_ops -maxdepth 1 -iname "*.c" )
+.PHONY: all clean
+all: 21_decimal.a
+
+libbinary: ${binary_s}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
+libcomp: ${comparison_s}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
+libconv: ${conversion_s}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
+libmath: ${math_ops_s}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
+libhelpers: ${helpers_s}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
+21_decimal.a: ${binary_s} ${helpers_s} ${math_ops_s} ${conversion_s} ${comparison_s}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
+clean: 
+	-rm -rf *.o && rm -rf *.gcno
+	-rm -rf *.a && rm -rf *.gcda
+	-rm -rf *.info && rm -rf *.gcov
+	-rm -rf ./test && rm -rf ./cov-report
+	-rm -rf ./report/ && rm -rf test.dSYM
+	-rm -rf test

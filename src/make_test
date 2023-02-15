@@ -1,19 +1,29 @@
-.PHONY:
+GCC = gcc
+CFLAGS = -I. 
+LDFLAGS = -c
 
-lib*:
-	make -f make_libs $@
+binary_t := $(shell find ./tests/tests_binary -iname "*.c" )
+comparison_t := $(shell find ./tests/test_comparison -iname "*.c" )
+conversion_t := $(shell find ./tests/test_convers -iname "*.c" )
+helpers_t := $(shell find ./tests/test_helpers -iname "*.c" )
+math_ops_t := $(shell find ./tests/test_math -iname "*.c" )
 
-21_decimal.a:
-	make -f make_libs $@
-	
+
+ifeq ($(shell uname -s),Darwin)
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lpthread -lm
+else
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lgcov -lpthread -lm -lsubunit
+endif
+
+
 test_comparison: ${TEST_SOURCE_CORE} libbinary
 	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
+	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_COMP
 	./$@
 
 test_convers: ${TEST_SOURCE_CORE} libbinary
 	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
+	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CONV
 	./$@
 
 tests_binary: ${TEST_SOURCE_CORE} libbinary

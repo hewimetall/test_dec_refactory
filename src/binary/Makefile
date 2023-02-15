@@ -1,11 +1,27 @@
-.PHONY:
+LIBS = BINARY
 
-lib*:
-	make -f make_libs $@
+GCC = gcc
+CFLAGS = -I. 
+LDFLAGS = -c
 
-21_decimal.a:
-	make -f make_libs $@
-	
+TEST_SOURCE_CORE := $(shell find ./tests/tests_binary -iname "*.c" )
+TEST_SOURCE_CORE := $(shell find ./tests/tests_binary -iname "*.c" )
+
+
+ifeq ($(shell uname -s),Darwin)
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lpthread -lm
+else
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lgcov -lpthread -lm -lsubunit
+endif
+
+TEST_FLAGS = ${TEST_FLAGS} -DTESTS_CORE
+
+libbinary: ${BINARY_SOURCE}
+	gcc -g -c  $^
+	ar rc $@  *.o
+	ranlib $@
+	make clean
+
 test_comparison: ${TEST_SOURCE_CORE} libbinary
 	make clean
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
