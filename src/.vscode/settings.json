@@ -35,7 +35,11 @@
         "__string": "c",
         "cmath": "c",
         "__bit_reference": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "comp.h": "c",
+        "test.h": "c",
+        "check.h": "c",
+        "math.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

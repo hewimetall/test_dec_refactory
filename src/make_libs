@@ -11,37 +11,37 @@ math_ops_s := $(shell find ./math_ops -maxdepth 1 -iname "*.c" )
 all: 21_decimal.a
 
 libbinary: ${binary_s}
-	gcc -g -c  $^
+	gcc -g -c $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean
 
 libcomp: ${comparison_s}
-	gcc -g -c  $^
-	ar rc $@  *.o
+	gcc -g -c  ${CFLAGS} $^
+	ar rc $@  *.o 
 	ranlib $@
 	make clean
 
 libconv: ${conversion_s}
-	gcc -g -c  $^
+	gcc -g -c  ${CFLAGS} $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean
 
 libmath: ${math_ops_s}
-	gcc -g -c  $^
+	gcc -g -c  ${CFLAGS} $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean
 
 libhelpers: ${helpers_s}
-	gcc -g -c  $^
+	gcc -g -c  ${CFLAGS} $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean
 
 21_decimal.a: ${binary_s} ${helpers_s} ${math_ops_s} ${conversion_s} ${comparison_s}
-	gcc -g -c  $^
+	gcc -g -c  ${CFLAGS} $^
 	ar rc $@  *.o
 	ranlib $@
 	make clean

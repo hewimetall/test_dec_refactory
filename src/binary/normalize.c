@@ -5,7 +5,7 @@
  *  1 e0 -> 10 e1
  *  1 e1 -> 1  e1
  */
-int dec_normalize(s21_decimal *v1, s21_decimal *v2) {
+int dec_normolize(s21_decimal *v1, s21_decimal *v2) {
   int diff = v1->head.exp - v2->head.exp;
   int err = ARITHMETIC_OK;
   if (diff > 0) {

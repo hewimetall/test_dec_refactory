@@ -3,15 +3,8 @@
 #include <limits.h>
 #include <math.h>
 #include "binary/core.h"
+#include "comparison/comp.h"
 
-/* Comparison Operators */
-int s21_is(s21_decimal a, s21_decimal b, int *err);
-int s21_is_less(s21_decimal a, s21_decimal b);
-int s21_is_less_or_equal(s21_decimal a, s21_decimal b);
-int s21_is_greater(s21_decimal a, s21_decimal b);
-int s21_is_greater_or_equal(s21_decimal a, s21_decimal b);
-int s21_is_equal(s21_decimal a, s21_decimal b);
-int s21_is_not_equal(s21_decimal a, s21_decimal b);
 
 /* Smart artithmetic API */
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);

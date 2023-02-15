@@ -61,10 +61,7 @@ s21_decimal binary_multiplication(s21_decimal value_1, s21_decimal value_2, int 
             result = binary_addition(result, value_1, err);
             if (*err)
                 break;
-        }else{
-            printf("%d\n",result.data[0]);
         }
-
         *err = shiftl(&value_1);
         shiftr(&value_2);
     }

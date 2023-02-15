@@ -1,4 +1,4 @@
-#include "s21_decimal.h"
+#include "comp.h"
 
 int s21_is_less(s21_decimal a, s21_decimal b) {
   int err = 0;

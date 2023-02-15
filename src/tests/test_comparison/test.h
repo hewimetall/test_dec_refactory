@@ -1,6 +1,8 @@
-#include "binary_api/core.h"
 #include <limits.h>
 #include <check.h>
 
-Suite* suite_binary_arith(void);
+#include "binary/core.h"
+#include "comparison/comp.h"
+
+Suite *suite_s21_is_equal(void);
 #define ARRAY_SIZE_BINARY 1 

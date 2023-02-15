@@ -1,4 +1,4 @@
-#include "s21_decimal.h"
+#include "comp.h"
 
 int s21_is_greater_or_equal(s21_decimal a, s21_decimal b) {
   int err = 0;

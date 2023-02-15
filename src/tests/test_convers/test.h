@@ -1,4 +1,4 @@
-#include "binary_api/core.h"
+#include "binary/core.h"
 #include <limits.h>
 #include <check.h>
 

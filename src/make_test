@@ -17,7 +17,7 @@ endif
 
 .PHONY: test_* main clean
 
-test_comparison: ${comparison_t} libbinary
+test_comparison: ${comparison_t} libbinary libcomp
 	make clean
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_COMP
 	./$@
