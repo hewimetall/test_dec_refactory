@@ -12,43 +12,36 @@ math_ops_t := $(shell find ./tests/test_math -iname "*.c" )
 ifeq ($(shell uname -s),Darwin)
 	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lpthread -lm
 else
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lgcov -lpthread -lm -lsubunit
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lgcov -lpthread -lm 
 endif
 
+.PHONY: test_* main clean
 
-test_comparison: ${TEST_SOURCE_CORE} libbinary
+test_comparison: ${comparison_t} libbinary
 	make clean
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_COMP
 	./$@
 
-test_convers: ${TEST_SOURCE_CORE} libbinary
+test_convers: ${conversion_t} libbinary
 	make clean
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CONV
 	./$@
 
-tests_binary: ${TEST_SOURCE_CORE} libbinary
+test_binary: ${binary_t} libbinary
 	make clean
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
 	./$@
 
-tests_helpers: ${TEST_SOURCE_CORE} libbinary
+test_helpers: ${helpers_t} libbinary
 	make clean
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
 	./$@
 
-test_core: ${TEST_SOURCE_CORE} libbinary
+test_math: ${helpers_t} libbinary
 	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
+	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_MATH
 	./$@
 
 main: ${LIB_INC}
 	gcc  -g main.c ${LIB_INC} -o $@
 	./main || true
-clean: 
-	-rm -rf *.o && rm -rf *.gcno
-	-rm -rf *.a && rm -rf *.gcda
-	-rm -rf *.info && rm -rf *.gcov
-	-rm -rf ./test && rm -rf ./cov-report
-	-rm -rf ./report/ && rm -rf test.dSYM
-	-rm -rf test
-.PHONY: libbinary main.a

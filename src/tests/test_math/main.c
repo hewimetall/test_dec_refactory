@@ -1,5 +1,5 @@
 #include "test.h"
-#ifdef TESTS_COMP
+#ifdef TESTS_MATH
 int main(void) {
   Suite *test_suites[] = {
     suite_binary_arith(),

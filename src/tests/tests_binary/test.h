@@ -1,4 +1,4 @@
-#include "binary_api/core.h"
+#include "s21_decimal.h"
 #include <limits.h>
 #include <check.h>
 

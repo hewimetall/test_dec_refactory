@@ -1,39 +1,7 @@
-.PHONY:
+.PHONY: lib* test* 21_decimal.a clean
+include make_libs
+include make_test
 
-lib*:
-	make -f make_libs $@
-
-21_decimal.a:
-	make -f make_libs $@
-	
-test_comparison: ${TEST_SOURCE_CORE} libbinary
-	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
-
-test_convers: ${TEST_SOURCE_CORE} libbinary
-	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
-
-tests_binary: ${TEST_SOURCE_CORE} libbinary
-	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
-
-tests_helpers: ${TEST_SOURCE_CORE} libbinary
-	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
-
-test_core: ${TEST_SOURCE_CORE} libbinary
-	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
-
-main: ${LIB_INC}
-	gcc  -g main.c ${LIB_INC} -o $@
-	./main || true
 clean: 
 	-rm -rf *.o && rm -rf *.gcno
 	-rm -rf *.a && rm -rf *.gcda
@@ -41,4 +9,3 @@ clean:
 	-rm -rf ./test && rm -rf ./cov-report
 	-rm -rf ./report/ && rm -rf test.dSYM
 	-rm -rf test
-.PHONY: libbinary main.a

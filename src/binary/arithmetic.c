@@ -25,8 +25,7 @@
 
 s21_decimal binary_addition(s21_decimal value_1, s21_decimal value_2, int *err) {
     *err = ARITHMETIC_OK;
-    s21_decimal carry = {{0},{.flags=0}};
-
+    DEC_INIT(carry);
     while (!eq_zero(value_2)) {
         zerro_data(&carry);
         carry = bit_and(value_1, value_2);

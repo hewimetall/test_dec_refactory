@@ -4,6 +4,14 @@
   {                           \
     {0, 0, 0}, { .flags = 0 } \
   }
+
+#define DECIMAL_ONE  \
+  (s21_decimal) {    \
+    {1, 0, 0}, {     \
+      { 0, 0, 0, 0 } \
+    }                \
+  }
+
 #define DEC_INIT(x) s21_decimal x = DEC_NULL
 
 #define IS_SET(X, POS) ((X >> POS) & 1U)

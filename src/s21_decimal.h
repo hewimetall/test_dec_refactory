@@ -2,7 +2,7 @@
 #define S21_DECIMAL_H
 #include <limits.h>
 #include <math.h>
-#include "binary_api/core.h"
+#include "binary/core.h"
 
 /* Comparison Operators */
 int s21_is(s21_decimal a, s21_decimal b, int *err);
@@ -34,9 +34,5 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst);  // В int debug ++
 int s21_from_decimal_to_float(s21_decimal src, float *dst);  // В float debug ++
 
 /* Helper func */
-s21_uint64 s21_pow10(int exp);
-int get_bit(s21_decimal src, int pos);
-int leftShift(s21_decimal *number);
-void setter(s21_decimal *number, int bit, int sign);
 void lower_scale(s21_decimal *dec);
 #endif

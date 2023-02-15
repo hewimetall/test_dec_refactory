@@ -7,7 +7,7 @@ comparison_s := $(shell find ./comparison -maxdepth 1 -iname "*.c" )
 conversion_s := $(shell find ./conversion -maxdepth 1 -iname "*.c" )
 helpers_s := $(shell find ./helpers -maxdepth 1 -iname "*.c" )
 math_ops_s := $(shell find ./math_ops -maxdepth 1 -iname "*.c" )
-.PHONY: all clean
+.PHONY: all clean lib*
 all: 21_decimal.a
 
 libbinary: ${binary_s}
@@ -46,10 +46,3 @@ libhelpers: ${helpers_s}
 	ranlib $@
 	make clean
 
-clean: 
-	-rm -rf *.o && rm -rf *.gcno
-	-rm -rf *.a && rm -rf *.gcda
-	-rm -rf *.info && rm -rf *.gcov
-	-rm -rf ./test && rm -rf ./cov-report
-	-rm -rf ./report/ && rm -rf test.dSYM
-	-rm -rf test
