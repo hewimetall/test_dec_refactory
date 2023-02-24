@@ -67,7 +67,7 @@ END_TEST
 
 
 
-START_TEST(test_07_diffSigns_mul) {
+START_TEST(test_06_diffSigns_mul) {
   s21_decimal value_1 = {{254, 0, 0}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{430, 0, 0}, {{0, 0, 0, 1}}};
   DEC_INIT(result);
@@ -81,7 +81,7 @@ START_TEST(test_07_diffSigns_mul) {
 }
 END_TEST
 
-START_TEST(test_08_samesigns_mul) {
+START_TEST(test_07_samesigns_mul) {
   s21_decimal value_1 = {{254, 0, 0}, {{0, 0, 0, 1}}};
   s21_decimal value_2 = {{430, 0, 0}, {{0, 0, 0, 1}}};
   DEC_INIT(result);
@@ -95,7 +95,7 @@ START_TEST(test_08_samesigns_mul) {
 }
 END_TEST
 
-START_TEST(test_09_3fields_mul) {
+START_TEST(test_08_3fields_mul) {
   s21_decimal value_1 = {{1, 1, 1}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{2, 0, 0}, {{0, 0, 0, 0}}};
   DEC_INIT(result);
@@ -109,7 +109,7 @@ START_TEST(test_09_3fields_mul) {
 }
 END_TEST
 
-START_TEST(test_10_mulbyzero_mul) {
+START_TEST(test_09_mulbyzero_mul) {
   s21_decimal value_1 = {{1, 1, 1}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{0, 0, 0}, {{0, 0, 0, 0}}};
   DEC_INIT(result);
@@ -123,7 +123,7 @@ START_TEST(test_10_mulbyzero_mul) {
 }
 END_TEST
 
-START_TEST(test_11_overfull_mul) {
+START_TEST(test_10_overfull_mul) {
   s21_decimal value_1 = {{0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{111, 111, 111}, {{0, 0, 0, 1}}};
   DEC_INIT(result);
@@ -136,7 +136,7 @@ START_TEST(test_11_overfull_mul) {
 }
 END_TEST
 
-START_TEST(test_12_overfull_exp_mul) {
+START_TEST(test_11_overfull_exp_mul) {
   s21_decimal value_1 = {{0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{111, 111, 111}, {{0, 1, 0, 0}}};
   DEC_INIT(result);
@@ -149,7 +149,7 @@ START_TEST(test_12_overfull_exp_mul) {
 }
 END_TEST
 
-START_TEST(test_13_overfull_exp_mul) {
+START_TEST(test_12_overfull_exp_mul) {
   s21_decimal value_1 = {{0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{111, 111, 111}, {{0, 1, 0, 1}}};
   DEC_INIT(result);
@@ -172,13 +172,15 @@ Suite *suite_s21_mul(void) {
   tcase_add_test(tc_insert, test_03_def_mul);
   tcase_add_test(tc_insert, test_04_overfull_mul);
   tcase_add_test(tc_insert, test_05_2field_ttest);
-  tcase_add_test(tc_insert, test_07_diffSigns_mul);
-  tcase_add_test(tc_insert, test_08_samesigns_mul);
-  tcase_add_test(tc_insert, test_09_3fields_mul);
-  tcase_add_test(tc_insert, test_10_mulbyzero_mul);
-  tcase_add_test(tc_insert, test_11_overfull_mul);
+  tcase_add_test(tc_insert, test_06_diffSigns_mul);
+  tcase_add_test(tc_insert, test_07_samesigns_mul);
+  tcase_add_test(tc_insert, test_08_3fields_mul);
+  tcase_add_test(tc_insert, test_09_mulbyzero_mul);
+  tcase_add_test(tc_insert, test_10_overfull_mul);
+  tcase_add_test(tc_insert, test_11_overfull_exp_mul);
   tcase_add_test(tc_insert, test_12_overfull_exp_mul);
-  tcase_add_test(tc_insert, test_13_overfull_exp_mul);
+  
+  suite_add_tcase(suite, tc_insert);
 
   return suite;
 }
