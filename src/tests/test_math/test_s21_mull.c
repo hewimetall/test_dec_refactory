@@ -128,7 +128,7 @@ START_TEST(test_10_overfull_mul) {
   s21_decimal value_2 = {{111, 111, 111}, {{0, 0, 0, 1}}};
   DEC_INIT(result);
 
-  ck_assert_int_eq(s21_mul(value_1, value_2, &result), COUNT_ERROR);
+  ck_assert_int_eq(s21_mul(value_1, value_2, &result), S21_NEGATIVE_INFINITY);
 
   ck_assert_int_eq(result.data[0], 0);
   ck_assert_int_eq(result.data[1], 0);
@@ -154,7 +154,7 @@ START_TEST(test_12_overfull_exp_mul) {
   s21_decimal value_2 = {{111, 111, 111}, {{0, 1, 0, 1}}};
   DEC_INIT(result);
 
-  ck_assert_int_eq(s21_mul(value_1, value_2, &result), COUNT_ERROR);
+  ck_assert_int_eq(s21_mul(value_1, value_2, &result), S21_NEGATIVE_INFINITY);
 
   ck_assert_int_eq(result.data[0], 0);
   ck_assert_int_eq(result.data[1], 0);
