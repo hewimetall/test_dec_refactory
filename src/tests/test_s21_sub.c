@@ -108,7 +108,7 @@ START_TEST(sub_with_dot) {
   // 111 01100010 10100011 00010001 00100100 00101111 01101011 00101100
 
   dec1.data[0] = 532167;
-  dec1.data[3] = 196608;  // 3 знака после запятой
+  dec1.head.flags = 196608;  // 3 знака после запятой
 
   dec2.data[0] = 1236;
   dec2.head.flags = 983040;  // 15 знаков после запятой
@@ -116,7 +116,7 @@ START_TEST(sub_with_dot) {
   DEC_INIT(true_ans);
   true_ans.data[0] = 607087404;
   true_ans.data[1] = 123904785;
-  true_ans.data[3] = 983040;  // 18 знаков после запятой
+  true_ans.head.flags = 983040;  // 18 знаков после запятой
   int status = s21_sub(dec1, dec2, &ans);
   int true_status = 0;  // операция прошла успешно
   ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
@@ -130,14 +130,14 @@ START_TEST(sub_with_dot_2) {
   DEC_INIT(ans);
 
   dec1.data[0] = 532167;
-  dec1.data[3] = 196608;  // 3 знака после запятой
+  dec1.head.flags = 196608;  // 3 знака после запятой
 
   dec2.data[0] = 0;
   dec2.head.flags = 0;  // 15 знаков после запятой
 
   DEC_INIT(true_ans);
   true_ans.data[0] = 532167;
-  true_ans.data[3] = 196608;
+  true_ans.head.flags = 196608;
 
   int status = s21_sub(dec1, dec2, &ans);
   int true_status = 0;  // операция прошла успешно
@@ -153,7 +153,7 @@ START_TEST(return_to_add) {
   DEC_INIT(ans);
   // -2361234 - 48695 = -2361234 + (-48695) = 2409929
   dec1.data[0] = 2361234;
-  dec1.data[3] = MINUS_SIGN;
+  dec1.head.flags = MINUS_SIGN;
 
   dec2.data[0] = 48695;
 

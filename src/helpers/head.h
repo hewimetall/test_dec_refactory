@@ -4,7 +4,6 @@
 #include "comparison/head.h"
 #include "conversion/head.h"
 #include "math_ops/head.h"
-#include "s21_struct.h"
 
 int s21_floor(s21_decimal value, s21_decimal *result);
 int s21_round(s21_decimal value, s21_decimal *result);
