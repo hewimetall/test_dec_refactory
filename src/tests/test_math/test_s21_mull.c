@@ -15,7 +15,7 @@ END_TEST
 
 START_TEST(test_02_def_mul) {
   s21_decimal value_1 = {{0x4CCCD0B4, 0x3018, 0}, {{0, 0, 0, 0}}};
-  s21_decimal value_2 = {{10, 0, 0}, {{0, 0, 0, 0}}};
+  s21_decimal value_2 = {{10, 0, 0}, {{0, 0, 0, 0}}}; 
   DEC_INIT(result);
 
   ck_assert_int_eq(s21_mul(value_1, value_2, &result), ARITHMETIC_OK);
@@ -65,6 +65,8 @@ START_TEST(test_05_2field_ttest) {
 }
 END_TEST
 
+
+
 START_TEST(test_07_diffSigns_mul) {
   s21_decimal value_1 = {{254, 0, 0}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{430, 0, 0}, {{0, 0, 0, 1}}};
@@ -107,7 +109,7 @@ START_TEST(test_09_3fields_mul) {
 }
 END_TEST
 
-START_TEST(test_09_mulbyzero_mul) {
+START_TEST(test_10_mulbyzero_mul) {
   s21_decimal value_1 = {{1, 1, 1}, {{0, 0, 0, 0}}};
   s21_decimal value_2 = {{0, 0, 0}, {{0, 0, 0, 0}}};
   DEC_INIT(result);
@@ -118,6 +120,45 @@ START_TEST(test_09_mulbyzero_mul) {
   ck_assert_int_eq(result.data[1], 0);
   ck_assert_int_eq(result.data[2], 0);
   ck_assert_int_eq(result.head.sign, 0);
+}
+END_TEST
+
+START_TEST(test_11_overfull_mul) {
+  s21_decimal value_1 = {{0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00}, {{0, 0, 0, 0}}};
+  s21_decimal value_2 = {{111, 111, 111}, {{0, 0, 0, 1}}};
+  DEC_INIT(result);
+
+  ck_assert_int_eq(s21_mul(value_1, value_2, &result), COUNT_ERROR);
+
+  ck_assert_int_eq(result.data[0], 0);
+  ck_assert_int_eq(result.data[1], 0);
+  ck_assert_int_eq(result.data[2], 0);
+}
+END_TEST
+
+START_TEST(test_12_overfull_exp_mul) {
+  s21_decimal value_1 = {{0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00}, {{0, 0, 0, 0}}};
+  s21_decimal value_2 = {{111, 111, 111}, {{0, 1, 0, 0}}};
+  DEC_INIT(result);
+
+  ck_assert_int_eq(s21_mul(value_1, value_2, &result), COUNT_ERROR);
+
+  ck_assert_int_eq(result.data[0], 0);
+  ck_assert_int_eq(result.data[1], 0);
+  ck_assert_int_eq(result.data[2], 0);
+}
+END_TEST
+
+START_TEST(test_13_overfull_exp_mul) {
+  s21_decimal value_1 = {{0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00}, {{0, 0, 0, 0}}};
+  s21_decimal value_2 = {{111, 111, 111}, {{0, 1, 0, 1}}};
+  DEC_INIT(result);
+
+  ck_assert_int_eq(s21_mul(value_1, value_2, &result), COUNT_ERROR);
+
+  ck_assert_int_eq(result.data[0], 0);
+  ck_assert_int_eq(result.data[1], 0);
+  ck_assert_int_eq(result.data[2], 0);
 }
 END_TEST
 
@@ -134,9 +175,10 @@ Suite *suite_s21_mul(void) {
   tcase_add_test(tc_insert, test_07_diffSigns_mul);
   tcase_add_test(tc_insert, test_08_samesigns_mul);
   tcase_add_test(tc_insert, test_09_3fields_mul);
-  tcase_add_test(tc_insert, test_09_mulbyzero_mul);
-
-  suite_add_tcase(suite, tc_insert);
+  tcase_add_test(tc_insert, test_10_mulbyzero_mul);
+  tcase_add_test(tc_insert, test_11_overfull_mul);
+  tcase_add_test(tc_insert, test_12_overfull_exp_mul);
+  tcase_add_test(tc_insert, test_13_overfull_exp_mul);
 
   return suite;
 }
