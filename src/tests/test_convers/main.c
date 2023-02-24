@@ -1,5 +1,6 @@
-#include "test.h"
 #ifdef TESTS_CONV
+#include "test.h"
+
 int main(void) {
   Suite *test_suites[] = {suite_s21_from_int_to_decimal(),
                           suite_s21_from_decimal_to_float(),

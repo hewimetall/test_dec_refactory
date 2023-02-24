@@ -1,5 +1,5 @@
-#include "test.h"
 #ifdef TESTS_COMP
+#include "test.h"
 int main(void) {
   Suite *test_suites[] = {
       suite_s21_is_equal(),     suite_s21_is_greater_or_equal(),

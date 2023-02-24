@@ -1,3 +1,6 @@
+#ifndef S21_HELPER_H_
+#define S21_HELPER_H_
+
 #include <check.h>
 #include <limits.h>
 
@@ -9,3 +12,4 @@ Suite* suite_binary_help(void);
 Suite* suite_binary_norm(void);
 Suite* suite_binary_other(void);
 Suite* suite_binary_logic(void);
+#endif

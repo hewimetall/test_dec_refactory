@@ -5,6 +5,7 @@
 #include <check.h>
 #include <limits.h>
 
+#include "test_binary/test.h"
 #include "test_comparison/test.h"
 #include "test_convers/test.h"
 #include "test_helpers/test.h"

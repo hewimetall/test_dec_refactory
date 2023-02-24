@@ -1,3 +1,6 @@
+#ifndef S21_HELPER_H_
+#define S21_HELPER_H_
+
 #include <check.h>
 #include <limits.h>
 
@@ -13,3 +16,4 @@ Suite *suite_s21_from_decimal_to_float(void);
 Suite *float_suite(void);
 
 #define ARRAY_SIZE_BINARY 1
+#endif

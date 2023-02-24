@@ -1,5 +1,6 @@
-#include "test.h"
 #ifdef TESTS_MATH
+#include "test.h"
+
 int main(void) {
   Suite *test_suites[] = {suite_s21_add(), suite_s21_mul(), suite_s21_sub(),
                           suite_s21_mod(), suite_s21_div()};

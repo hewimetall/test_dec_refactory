@@ -1,3 +1,6 @@
+#ifndef S21_HELPER_H_
+#define S21_HELPER_H_
+
 #include <check.h>
 #include <limits.h>
 
@@ -8,3 +11,4 @@ Suite* suite_s21_mul(void);
 Suite* suite_s21_sub(void);
 Suite* suite_s21_mod(void);
 #define ARRAY_SIZE_BINARY 1
+#endif

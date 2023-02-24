@@ -1,5 +1,6 @@
-#include "test.h"
 #ifdef TESTS_HELP
+#include "test.h"
+
 int main(void) {
   Suite *test_suites[] = {suite_s21_negate(), suite_s21_floor(),
                           suite_s21_truncate(), suite_s21_round()
