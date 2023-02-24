@@ -13,7 +13,7 @@ all := $(shell find ./ -iname "*.c"  )
 ifeq ($(shell uname -s),Darwin)
 	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
 else
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lgcov -lpthread -lm -lsubunit 
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lgcov -lpthread -lm
 endif
 
 ERROR_FLAGS =  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
@@ -45,14 +45,6 @@ test_helpers: ${helpers_t} libbinary libhelpers libconv libmath libcomp
 test_math: ${math_ops_t} libbinary libcomp libmath libhelpers
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_MATH
 	./$@.a
-
-cppcheck: $(all) 
-	cppcheck $^;
-
-format: $(all)
-	cp ../materials/linters/.clang-format .
-	clang-format -i -style=google $^;
-	rm .clang-format
 
 valgrind: test_comparison
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --leak-check=yes --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind_log.txt ./$^
