@@ -20,12 +20,11 @@ Suite* suite_s21_is_greater_or_equal(void);
 Suite* suite_s21_is_equal(void);
 Suite* suite_s21_is_not_equal(void);
 
-Suite* suite_binary_arith(void);
-Suite* suite_binary_comp(void);
-Suite* suite_binary_help(void);
-Suite* suite_binary_norm(void);
-Suite* suite_binary_other(void);
-Suite* suite_binary_logic(void);
+Suite *suite_s21_floor(void);
+Suite *suite_s21_round(void);
+Suite *suite_s21_truncate(void);
+Suite *suite_s21_negate(void);
+Suite *suite_s21_shift10(void);
 
 Suite* suite_s21_from_int_to_decimal(void);
 Suite* suite_s21_from_float_to_decimal(void);
