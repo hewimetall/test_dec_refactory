@@ -32,6 +32,7 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 
     if (!is_owerfull) *result = tmp;
     if (sign) result->head.sign = 1;
+    if (result->head.sign && is_owerfull) is_owerfull = S21_NEGATIVE_INFINITY;
     result->head.exp = tmp_exp;
   }
   return is_owerfull;
