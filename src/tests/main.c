@@ -1,7 +1,4 @@
-#include "test_binary/test.h"
-#include "test_comparison/test.h"
-#include "test_convers/test.h"
-#include "test_math/test.h"
+#include "test.h"
 
 int main(void)
 {
@@ -25,7 +22,7 @@ int main(void)
   srunner_set_fork_status(sr, CK_NOFORK);
   int nf;
 
-  for (size_t i = 1; i < 1; i++)
+  for (size_t i = 1; i < 18; i++)
     srunner_add_suite(sr, test_suites[i]);
   srunner_run_all(sr, CK_NORMAL);
   nf = srunner_ntests_failed(sr);

@@ -1,7 +1,7 @@
 .PHONY: 21_decimal.a test clean cppcheck format
 all: s21_decimal.a test clean
 
-CFLAGS = -I.
+CFLAGS = -I. 
 
 binary_s := $(shell find ./binary -maxdepth 1 -iname "*.c" )
 comparison_s := $(shell find ./comparison -maxdepth 1 -iname "*.c" )
@@ -10,6 +10,7 @@ helpers_s := $(shell find ./helpers -maxdepth 1 -iname "*.c" )
 math_ops_s := $(shell find ./math_ops -maxdepth 1 -iname "*.c" )
 
 all := $(shell find ./ -iname "*.c" )
+test_f := $(shell find ./tests/ -iname "*.c" )
 
 ifeq ($(shell uname -s),Darwin)
 	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
@@ -22,7 +23,7 @@ s21_decimal.a: ${binary_s} ${helpers_s} ${math_ops_s} ${conversion_s} ${comparis
 	ar rc $@  *.o
 	ranlib $@
 
-test: ${all}
+test: ${test_f} s21_decimal.a
 	gcc -g $(CFLAGS) $(TEST_FLAGS)
 	./$@.a
 
