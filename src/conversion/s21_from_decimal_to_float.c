@@ -2,7 +2,7 @@
 
 int s21_from_decimal_to_float(s21_decimal src, float *dst) {
   *dst = 0.f;
-  int status = CONVERTATION_OK;
+  int status = CONVERTATION_OK, sign = src.head.sign;
   if (s21_is_correct_decimal(src)) {
     if (!dst)
       status = CONVERTATION_ERROR;
@@ -12,7 +12,7 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
 
       while (src.head.exp--) tmp /= 10.0;
 
-      if (src.head.sign) tmp *= -1.0;
+      if (sign) tmp *= -1.0;
 
       *dst = tmp;
     }
