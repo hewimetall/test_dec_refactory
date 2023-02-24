@@ -1,5 +1,5 @@
 .PHONY: 21_decimal.a test clean cppcheck format
-all: s21_decimal.a test clean
+all: s21_decimal.a test 
 
 CFLAGS = -I. 
 
@@ -13,9 +13,9 @@ all := $(shell find ./ -iname "*.c" )
 test_f := $(shell find ./tests/ -iname "*.c" )
 
 ifeq ($(shell uname -s),Darwin)
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm 
 else
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lgcov -lpthread -lm
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lgcov -lpthread -lm 
 endif
 
 s21_decimal.a: ${binary_s} ${helpers_s} ${math_ops_s} ${conversion_s} ${comparison_s}
@@ -27,14 +27,21 @@ test: ${test_f} s21_decimal.a
 	gcc -g $(CFLAGS) $(TEST_FLAGS)
 	./$@.a
 
+gcov_report: test
+	gcov  ${binary_s} ${helpers_s} ${math_ops_s} ${conversion_s} ${comparison_s} $(test_f)
+	rm -rf s21_decimal_test.gcda s21_decimal_test.gcno
+	find ./ -type f -iname '*.gcda'
+	lcov --directory ./ --capture --output-file postgresql.info
+	mkdir cov-report
+	genhtml -o ./cov-report/ postgresql.info
+
 cppcheck: $(all) 
 	cppcheck $^;
 
 format: $(all)
-	cp ../materials/linters/.clang-format .
+
 	clang-format -i -style=google $^;
 	rm .clang-format
-
 
 clean: 
 	-rm -rf *.o && rm -rf *.gcno

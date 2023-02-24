@@ -15,7 +15,7 @@ END_TEST
 
 START_TEST(test_02_def_mul) {
   s21_decimal value_1 = {{0x4CCCD0B4, 0x3018, 0}, {{0, 0, 0, 0}}};
-  s21_decimal value_2 = {{10, 0, 0}, {{0, 0, 0, 0}}}; 
+  s21_decimal value_2 = {{10, 0, 0}, {{0, 0, 0, 0}}};
   DEC_INIT(result);
 
   ck_assert_int_eq(s21_mul(value_1, value_2, &result), ARITHMETIC_OK);
@@ -64,8 +64,6 @@ START_TEST(test_05_2field_ttest) {
   ck_assert_int_eq(result.data[2], 0x00000000);
 }
 END_TEST
-
-
 
 START_TEST(test_06_diffSigns_mul) {
   s21_decimal value_1 = {{254, 0, 0}, {{0, 0, 0, 0}}};
@@ -179,7 +177,7 @@ Suite *suite_s21_mul(void) {
   tcase_add_test(tc_insert, test_10_overfull_mul);
   tcase_add_test(tc_insert, test_11_overfull_exp_mul);
   tcase_add_test(tc_insert, test_12_overfull_exp_mul);
-  
+
   suite_add_tcase(suite, tc_insert);
 
   return suite;

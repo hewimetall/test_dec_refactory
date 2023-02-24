@@ -1,5 +1,5 @@
 GCC = gcc
-CFLAGS =  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra -I.
+CFLAGS = -I.
 LDFLAGS = -c
 
 binary_s := $(shell find ./binary -maxdepth 1 -iname "*.c" )

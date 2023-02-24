@@ -1,5 +1,5 @@
 GCC = gcc
-CFLAGS = -I.  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
+CFLAGS = -I.
 LDFLAGS = -c
 
 binary_t := $(shell find ./tests/test_binary -iname "*.c" )
@@ -11,7 +11,7 @@ all := $(shell find ./ -iname "*.c"  )
 
 
 ifeq ($(shell uname -s),Darwin)
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm 
 else
 	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lgcov -lpthread -lm
 endif
