@@ -17,27 +17,26 @@ START_TEST(s21_from_decimal_to_float_2) {
 
   int result = s21_from_decimal_to_float(src, &number);
 
-  ck_assert_float_eq(number, -1812);
+  ck_assert_float_eq(number, -18122);
   ck_assert_int_eq(result, ARITHMETIC_OK);
 }
 END_TEST
 
 START_TEST(s21_from_decimal_to_float_3) {
-  s21_decimal src = {{__INT_MAX__, 0, 0}, {{0, 0, 0, 1}}};
+  s21_decimal src = {{UINT_MAX, 0, 0}, {{0, 0, 0, 1}}};
   float number = 0.0;
 
   int result = s21_from_decimal_to_float(src, &number);
 
-  ck_assert_float_eq(number, 16777215);
+  ck_assert_float_eq(number, -(float)UINT_MAX);
   ck_assert_int_eq(result, ARITHMETIC_OK);
 }
 END_TEST
 
 START_TEST(s21_from_decimal_to_float_4) {
-  s21_decimal src = {{23450987, 0, 0}, {{0, 0, 0, 0}}};
+  s21_decimal src = {{23450987, 0, 0}, {{0, 4, 0, 1}}};
   float number = 0.0;
 
-  src.head.flags = 0x80040000;
   int result = s21_from_decimal_to_float(src, &number);
 
   ck_assert_float_eq(number, -2345.0987);
@@ -46,7 +45,7 @@ START_TEST(s21_from_decimal_to_float_4) {
 END_TEST
 
 START_TEST(s21_from_decimal_to_float_5) {
-  s21_decimal src = {{4294967295, 4294967295, 0}, {{0, 0, 0, 0}}};
+  s21_decimal src = {{UINT_MAX, UINT_MAX, 0}, {{0, 0, 0, 0}}};
   float number = 0.0;
 
   int result = s21_from_decimal_to_float(src, &number);
@@ -57,18 +56,19 @@ START_TEST(s21_from_decimal_to_float_5) {
 END_TEST
 
 START_TEST(s21_from_decimal_to_float_6) {
-  s21_decimal src = {{1234, 123123, 123132}, {1, 1, 1, 1}};
-  float number = 1.2;
+  s21_decimal src = {{UINT_MAX, UINT_MAX, 0}, {{1, 1, 1, 1}}};
+  float number = 0.0;
 
   int result = s21_from_decimal_to_float(src, &number);
-  ck_assert_int_eq(result, S21_INFINITY);
+
+  ck_assert_int_eq(result, CONVERTATION_ERROR);
 }
 END_TEST
 
-Suite *s21_from_decimal_to_float_suite(void) {
-  Suite *suite = suite_create("FROM_DECIMAL_TO_FLOAT test");
+Suite *suite_s21_from_decimal_to_float(void) {
+  Suite *suite = suite_create("=== FROM_DECIMAL_TO_FLOAT TEST ===");
 
-  TCase *tc = tcase_create("from_decimal_to_float_test");
+  TCase *tc = tcase_create("tc");
 
   tcase_add_test(tc, s21_from_decimal_to_float_1);
   tcase_add_test(tc, s21_from_decimal_to_float_2);

@@ -1,6 +1,14 @@
-#include "binary_api/core.h"
-#include <limits.h>
 #include <check.h>
+#include <limits.h>
 
-Suite* suite_binary_arith(void);
-#define ARRAY_SIZE_BINARY 1 
+#include "binary/head.h"
+#include "conversion/head.h"
+#include "helpers/head.h"
+
+Suite *suite_s21_floor(void);
+Suite *suite_s21_round(void);
+Suite *suite_s21_truncate(void);
+Suite *suite_s21_negate(void);
+Suite *suite_s21_shift10(void);
+
+#define ARRAY_SIZE_BINARY 1

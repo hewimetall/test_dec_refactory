@@ -1,18 +1,13 @@
-#include "s21_decimal.h"
+#include "head.h"
 
 int s21_from_decimal_to_int(s21_decimal src, int *dst) {
-  
   int status = CONVERTATION_OK;
-  if (!dst) status = CONVERTATION_ERROR;
-
-  long double tmp = 0;
-  for (int i = 0; i < 96; i++) tmp += (double)pow(2, i) * get_bit(src, i);
-
-  while (src.head.exp--) tmp /= 10.0;
-
-  if (src.head.sign) tmp *= -1.0;
-
-  *dst = (int)(tmp + 0.5);
-  
+  if (s21_is_correct_decimal(src)) {
+    binary_division(src, s21_pow10(src.head.exp), &status, (void *)0);
+    if (src.data[1] == 0 && src.data[2] == 0) *dst = src.data[0];
+    if (src.head.sign) *dst *= -1;
+  } else {
+    status = COUNT_ERROR;
+  }
   return status;
 }

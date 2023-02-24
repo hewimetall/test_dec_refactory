@@ -1,28 +1,28 @@
-#include "s21_decimal.h"
+#include "head.h"
 
 int s21_round(s21_decimal value, s21_decimal *result) {
-    int error = 0;
-    if (s21_is_equal(*result,DECIMAL_ZERO)) {
-        error = 1;
-    } else {
-        *result = value;
-        int exp = 0;
-        int sign = 0;
-        exp = result->head.exp;
-        sign = result->head.sign;
-        if (exp > 0) {
-            while (exp > 1) {
-                shift_exp(1, result);
-                exp--;
-            }
-            s21_decimal five;
-            five = DECIMAL_ZERO;
-            five.data[0] = 5;
-            simple_add(result, five, &result);
-            result->head.exp = exp;
-            shift_exp(1, result);
-        }
-        if (sign) result->head.sign;
+  int status = ARITHMETIC_OK;
+  if (s21_is_correct_decimal(value)) {
+    DEC_INIT(mul);
+    s21_truncate(value, result);
+    int sign = value.head.sign;
+    int exp = value.head.exp;
+    if (exp) exp--;
+    while (exp--) {
+      value = binary_division(value, s21_pow10(1), &status, (void *)0);
     }
-    return error;
+    value.head.exp = 0;
+    s21_mod(value, s21_pow10(1), &mul);
+
+    if (mul.data[0] >= 5) {
+      if (sign)
+        s21_sub(*result, DECIMAL_ONE, result);
+      else
+        s21_add(*result, DECIMAL_ONE, result);
+    }
+    if (sign) result->head.sign = 1;
+  } else {
+    status = COUNT_ERROR;
+  }
+  return status;
 }

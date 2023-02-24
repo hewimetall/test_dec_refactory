@@ -1,7 +1,16 @@
+libbinary  
+libcomp    
+libconv    
+libhelpers 
+libmath
+test*.a
+*.gcno
+.vscode/*
+*.gcda
+
 # Prerequisites
 *.d
-main
-lib*
+
 # Object files
 *.o
 *.ko

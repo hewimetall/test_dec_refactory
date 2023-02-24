@@ -1,47 +1,60 @@
 GCC = gcc
-CFLAGS = -I. 
+CFLAGS = -I.  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
 LDFLAGS = -c
 
-binary_t := $(shell find ./tests/tests_binary -iname "*.c" )
+binary_t := $(shell find ./tests/test_binary -iname "*.c" )
 comparison_t := $(shell find ./tests/test_comparison -iname "*.c" )
 conversion_t := $(shell find ./tests/test_convers -iname "*.c" )
 helpers_t := $(shell find ./tests/test_helpers -iname "*.c" )
 math_ops_t := $(shell find ./tests/test_math -iname "*.c" )
+all := $(shell find ./ -iname "*.c"  )
 
 
 ifeq ($(shell uname -s),Darwin)
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lpthread -lm
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lpthread -lm  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
 else
-	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@ -lcheck -lgcov -lpthread -lm 
+	TEST_FLAGS  = -fprofile-arcs -ftest-coverage --coverage $^ -o $@.a -lcheck -lgcov -lpthread -lm -lsubunit 
 endif
 
-.PHONY: test_* main clean
+ERROR_FLAGS =  -Wuninitialized -Winit-self -Wmaybe-uninitialized -fanalyzer -Wall -Werror -Wextra
 
-test_comparison: ${comparison_t} libbinary libcomp
-	make clean
+.PHONY: test_* main clean tests_libs 21_decimal.a
+
+tests_libs: test_helpers test_comparison test_convers test_binary test_math
+
+test: ${all_t} s21_decimal.a
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_COMP
-	./$@
+	./$@.a
 
-test_convers: ${conversion_t} libbinary
-	make clean
+test_comparison: ${comparison_t} libbinary libcomp libhelpers
+	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_COMP
+	./$@.a
+
+test_convers: ${conversion_t} libbinary libcomp libconv  libmath libhelpers
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CONV
-	./$@
+	./$@.a
 
-test_binary: ${binary_t} libbinary
-	make clean
+test_binary: ${binary_t} libbinary libhelpers
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
+	./$@.a
 
-test_helpers: ${helpers_t} libbinary
-	make clean
-	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_CORE
-	./$@
+test_helpers: ${helpers_t} libbinary libhelpers libconv libmath libcomp
+	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_HELP
+	./$@.a
 
-test_math: ${helpers_t} libbinary
-	make clean
+test_math: ${math_ops_t} libbinary libcomp libmath libhelpers
 	$(GCC) $(CFLAGS) $(TEST_FLAGS)  -DTESTS_MATH
-	./$@
+	./$@.a
 
-main: ${LIB_INC}
-	gcc  -g main.c ${LIB_INC} -o $@
-	./main || true
+cppcheck: $(all) 
+	cppcheck $^;
+
+format: $(all)
+	cp ../materials/linters/.clang-format .
+	clang-format -i -style=google $^;
+	rm .clang-format
+
+valgrind: test_comparison
+	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --leak-check=yes --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind_log.txt ./$^
+	valgrind --leak-check=full --leak-resolution=high $^
+

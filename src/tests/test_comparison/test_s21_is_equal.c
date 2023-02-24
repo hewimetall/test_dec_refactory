@@ -64,9 +64,9 @@ START_TEST(s21_is_equal_6) {
 }
 
 Suite *suite_s21_is_equal(void) {
-  Suite *suite = suite_create("EQUAL test");
+  Suite *suite = suite_create("\n === EQUAL         TEST ===");
 
-  TCase *tc_insert = tcase_create("equal_test");
+  TCase *tc_insert = tcase_create("tc");
 
   tcase_add_test(tc_insert, s21_is_equal_1);
   tcase_add_test(tc_insert, s21_is_equal_2);

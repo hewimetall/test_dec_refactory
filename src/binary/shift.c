@@ -1,4 +1,4 @@
-#include "core.h"
+#include "head.h"
 
 // Логический (беззнаковый) сдвиг в лево
 int shiftl(s21_decimal *a) {
@@ -37,4 +37,3 @@ void shiftr(s21_decimal *a) {
 
   if (b2_tmp) set_bit_1(a, 31);
 }
-

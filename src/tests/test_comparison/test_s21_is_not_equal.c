@@ -166,9 +166,9 @@ START_TEST(s21_is_not_equal_15) {
 END_TEST
 
 Suite *suite_s21_is_not_equal(void) {
-  Suite *suite = suite_create("NOT EQUAL test");
+  Suite *suite = suite_create("=== NOT EQUAL     TEST ===");
 
-  TCase *tc_insert = tcase_create("not_equal_test");
+  TCase *tc_insert = tcase_create("tc");
 
   tcase_add_test(tc_insert, s21_is_not_equal_1);
   tcase_add_test(tc_insert, s21_is_not_equal_2);
